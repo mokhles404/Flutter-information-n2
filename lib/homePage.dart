@@ -1,5 +1,6 @@
 // home_page.dart
 import 'package:flutter/material.dart';
+import 'package:seance3/stackPage.dart';
 
 import 'exerciepage.dart';
 import 'formpage.dart';
@@ -7,6 +8,8 @@ import 'infopage.dart';
 
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -14,10 +17,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   final List<Widget> _pages = [
-    InfoPage(),
-    FormPage(),
+     ListViewExample(),
+    // const FormPage(),
     ExercisePage(),
-    // TestPage()
+     StackPage()
   ];
 
   void _onTabTapped(int index) {
@@ -28,29 +31,32 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onTabTapped,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'My Info',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.login),
-            label: 'Login',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.fitness_center),
-            label: 'Exercise',
-          ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.person),
-          //   label: 'Test',
-          // ),
-        ],
+    return MaterialApp(
+
+      home: Scaffold(
+        body: _pages[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: _onTabTapped,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.info,color: Colors.purple,),
+              label: 'My Info',
+            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.login,color: Colors.purple,),
+            //   label: 'Login',
+            // ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.fitness_center,color: Colors.purple,),
+              label: 'Exercise',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person,color: Colors.purple,),
+              label: 'Test',
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -59,14 +65,3 @@ class _HomePageState extends State<HomePage> {
 
 
 
-class TestPage extends StatelessWidget {
-  const TestPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-
-      body: Text("Test Page"),
-    );
-  }
-}

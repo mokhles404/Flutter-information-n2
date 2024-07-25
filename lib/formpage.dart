@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:seance3/exerciepage.dart';
+import 'package:seance3/homePage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
-class FormPage extends StatefulWidget {
-  const FormPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<FormPage> createState() => _FormPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _FormPageState extends State<FormPage> {
+class _LoginPageState extends State<LoginPage> {
 
 
   String? myAddress ="";
@@ -23,105 +26,118 @@ class _FormPageState extends State<FormPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.cyan,
-      appBar: AppBar(title: Text("Form Page"),centerTitle: true,),
-      body:  Padding(
-        padding: EdgeInsets.symmetric(horizontal: 32,vertical: 8),
-        child: ListView(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.cyan,
+        appBar: AppBar(title: const Text("Form Page"),centerTitle: true,),
+        body:  Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32,vertical: 8),
+          child: ListView(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: [
 
-            Image.asset("assets/img.jpg",width: 150,height:150),
+              Image.asset("assets/img.jpg",width: 150,height:150),
 
-            Text("Login Page",style: TextStyle(color: Colors.black,fontSize: 42),),
-            Text(error!,style: TextStyle(color: Colors.red,fontSize: 36),),
+              const Text("Login Page",style: TextStyle(color: Colors.black,fontSize: 42),),
+              Text(error!,style: const TextStyle(color: Colors.red,fontSize: 36),),
 
-            TextField(
-              controller: addressC,
-              decoration: InputDecoration(
-                  labelText: "Address",
-                  labelStyle: TextStyle(fontSize: 22),
-                  hintText: "Please write your Address"
+              TextField(
+                controller: addressC,
+                decoration: const InputDecoration(
+                    labelText: "Address",
+                    labelStyle: TextStyle(fontSize: 22),
+                    hintText: "Please write your Address"
 
+                ),
+                // onChanged: (String? address){
+                //   print(address);
+                //   myAddress=address;
+                // },
               ),
-              // onChanged: (String? address){
-              //   print(address);
-              //   myAddress=address;
-              // },
-            ),
 
 
-            TextField(
-              controller: PasswordC,
-              decoration: InputDecoration(
-                  labelText: "Password",
-                  labelStyle: TextStyle(fontSize: 22),
-                  hintText: "Please write your Password"
+              TextField(
+                controller: PasswordC,
+                decoration: const InputDecoration(
+                    labelText: "Password",
+                    labelStyle: TextStyle(fontSize: 22),
+                    hintText: "Please write your Password"
 
+                ),
+                // onChanged: (String? password){
+                //   myPassword=password;
+                // },
               ),
-              // onChanged: (String? password){
-              //   myPassword=password;
-              // },
-            ),
 
-            ElevatedButton(
-                onPressed: () {
-                  //method 1
-                  // if(myAddress!.contains("@"))  {
-                  //   print("correct address");
-                  // }
-                  // else{
-                  //   print("not correct");
-                  // }
-                  //
-                  // if(myPassword!.length> 3)  {
-                  //   print("password correct ");
-                  // }
-                  // else{
-                  //   print("password not correct");
-                  // }
+              ElevatedButton(
+                  onPressed: () async {
+                    //method 1
+                    // if(myAddress!.contains("@"))  {
+                    //   print("correct address");
+                    // }
+                    // else{
+                    //   print("not correct");
+                    // }
+                    //
+                    // if(myPassword!.length> 3)  {
+                    //   print("password correct ");
+                    // }
+                    // else{
+                    //   print("password not correct");
+                    // }
 
-                  //method2
+                    //method2
 
-                  // if(addressC.text.contains("@"))  {
-                  //    print("correct address");
-                  //  }
-                  //  else{
-                  //    print("not correct");
-                  //  }
+                    // if(addressC.text.contains("@"))  {
+                    //    print("correct address");
+                    //  }
+                    //  else{
+                    //    print("not correct");
+                    //  }
 
 
-                  // addressC.text= " ";
+                    // addressC.text= " ";
 
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //   const SnackBar(content: Text('Processing Data')),
-                  // );
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   const SnackBar(content: Text('Processing Data')),
+                    // );
 
-                  if(addressC.text !="mokhles@gmail.com") {
-                    error="Incorrect address";
+                    final box = GetStorage();
+                    print(box.read('email'));
+
+
+                    if(addressC.text !="mokhles@gmail.com") {
+                      error="Incorrect address";
+                      setState(() {
+                      });
+                      return;
+                    }
+
+                    if(PasswordC.text !="1234") {
+                      error="Incorrect Password";
+                      setState(() {
+                      });
+                      return;
+                    }
+
+                    error="";
                     setState(() {
                     });
-                    return;
-                  }
-
-                  if(PasswordC.text !="1234") {
-                    error="Incorrect Password";
-                    setState(() {
-                    });
-                    return;
-                  }
-
-                  error="";
-                  setState(() {
-                  });
-
-                  Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>ExercisePage()));
+                    // final SharedPreferences prefs = await SharedPreferences.getInstance();
+                    // await prefs.setString('email', addressC.text);
 
 
-                },
-                child: Text("Login"))
-          ],
+                    box.write('email', addressC.text);
+
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>HomePage()));
+
+
+                  },
+                  child: const Text("Login"))
+            ],
+          ),
         ),
       ),
     );

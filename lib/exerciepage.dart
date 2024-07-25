@@ -21,14 +21,15 @@ class ExercisePage extends StatelessWidget {
         children: [
 
           Image.network(url),
-          Text("Profile Name"),
+          const Text("Profile Name"),
 
           telAddressBar(),
           ElevatedButton( onPressed: () {
 
             Navigator.of(context).pop();
           },
-          child: Text("backbtn"))
+          child: Text("backbtn")
+          )
         ],
       ),
 
